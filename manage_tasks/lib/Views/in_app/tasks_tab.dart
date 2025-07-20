@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:manage_tasks/Core/widgets/custom_text_field.dart';
 
 import '../../Core/utils/cash_helper.dart';
+import '../../Core/utils/shared_tasks.dart';
 
 class TasksTab extends StatefulWidget {
   const TasksTab({super.key});
@@ -12,28 +13,14 @@ class TasksTab extends StatefulWidget {
 
 class _TasksTabState extends State<TasksTab> {
   final TextEditingController taskController = TextEditingController();
-  List<Map<String, dynamic>> tasks = [
-    {'name': 'Grocery Shopping', 'creator': 'Ethan Carter', 'completed': false},
-    {
-      'name': 'Book Appointment',
-      'creator': 'Olivia Bennett',
-      'completed': false,
-    },
-    {'name': 'Pay Bills', 'creator': 'Noah Thompson', 'completed': false},
-    {'name': 'Plan Vacation', 'creator': 'Sophia Clark', 'completed': false},
-    {'name': 'Gym Workout', 'creator': 'Liam Walker', 'completed': false},
-    {'name': 'Read Book', 'creator': 'Ava Harris', 'completed': false},
-    {'name': 'Learn New Skill', 'creator': 'Caleb Foster', 'completed': false},
-  ];
 
   void addTask() {
     if (taskController.text.isNotEmpty) {
       setState(() {
-        tasks.add({
-          'name': taskController.text,
-          'creator': CacheHelper.getDataSync(key: 'firstName')!,
-          'completed': false,
-        });
+        SharedTasks.addTask(
+          taskController.text,
+          CacheHelper.getDataSync(key: 'firstName')!,
+        );
         taskController.clear();
       });
     }
@@ -41,7 +28,13 @@ class _TasksTabState extends State<TasksTab> {
 
   void deleteTask(int index) {
     setState(() {
-      tasks.removeAt(index);
+      SharedTasks.deleteTask(index);
+    });
+  }
+
+  void toggleTaskCompletion(int index) {
+    setState(() {
+      SharedTasks.toggleTaskCompletion(index);
     });
   }
 
@@ -104,7 +97,7 @@ class _TasksTabState extends State<TasksTab> {
             // Tasks List
             Expanded(
               child: ListView.builder(
-                itemCount: tasks.length,
+                itemCount: SharedTasks.tasks.length,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
@@ -121,21 +114,21 @@ class _TasksTabState extends State<TasksTab> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                tasks[index]['name']!,
+                                SharedTasks.tasks[index]['name']!,
                                 style: TextStyle(
-                                  color: tasks[index]['completed']
+                                  color: SharedTasks.tasks[index]['completed']
                                       ? Colors.grey[400]
                                       : Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  decoration: tasks[index]['completed']
+                                  decoration: SharedTasks.tasks[index]['completed']
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
                                 ),
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'Created by: ${tasks[index]['creator']!}',
+                                'Created by: ${SharedTasks.tasks[index]['creator']!}',
                                 style: TextStyle(
                                   color: Colors.grey[400],
                                   fontSize: 14,
@@ -145,12 +138,12 @@ class _TasksTabState extends State<TasksTab> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => toggleTaskCompletion(index),
                           icon: Icon(
-                            tasks[index]['completed']
+                            SharedTasks.tasks[index]['completed']
                                 ? Icons.check_circle
                                 : Icons.radio_button_unchecked,
-                            color: tasks[index]['completed']
+                            color: SharedTasks.tasks[index]['completed']
                                 ? Colors.green
                                 : Colors.white,
                             size: 24,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manage_tasks/Core/utils/assets.dart';
 import 'package:manage_tasks/Core/utils/cash_helper.dart';
+import '../../Core/utils/shared_tasks.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -153,6 +154,55 @@ class _ProfileTabState extends State<ProfileTab> {
                     ),
                   ),
                   const SizedBox(height: 16),
+
+                  ...SharedTasks.getCompletedTasks().map(
+                    (task) => Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.white.withOpacity(0.2),
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              task['name']!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                            size: 24,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (SharedTasks.getCompletedTasks().isEmpty)
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      child: const Text(
+                        'No completed tasks yet',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
