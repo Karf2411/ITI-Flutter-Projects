@@ -13,6 +13,10 @@ This project is a starting point for a Flutter application.
 ## Create Account Screen without data
 ![](assets/screen_shot/2.jpg)
 
+## validation
+![](assets/screen_shot/Screenshot 2025-07-22 013845.png)
+
+
 ## Create Account Screen with data
 ![](assets/screen_shot/3.jpg)
 
@@ -39,3 +43,18 @@ This project is a starting point for a Flutter application.
 
 ## logout dialog
 ![](assets/screen_shot/11.jpg)
+
+## Posts tab
+![](assets/screen_shot/Screenshot 2025-07-22 013434.png)
+
+## search for a post
+![](assets\screen_shot\Screenshot 2025-07-22 013451.png)
+
+
+## Favorite posts tab
+![](assets/screen_shot/Screenshot 2025-07-22 013520.png)
+
+## Number of favorite posts in profile tab
+![](assets/screen_shot/Screenshot 2025-07-22 013610.png)
+
+

@@ -18,7 +18,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   int selectedIndex = 0;
 
-  List<Widget> get pages => [
+  final List<Widget> pages = [
     HomeTab(),
     TasksTab(),
     ProfileTab(),
@@ -122,7 +122,41 @@ class _HomeViewState extends State<HomeView> {
               icon: Icons.logout,
               color: Colors.red,
               onTap: () {
-                showLogoutDialog(context);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      backgroundColor: const Color(0xFF2B3840),
+                      title: const Text(
+                        'Logout',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      content: const Text(
+                        'Are you sure you want to logout?',
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            await CacheHelper.clearData();
+                            context.go('/');
+                          },
+                          child: const Text(
+                            'Logout',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
           ],

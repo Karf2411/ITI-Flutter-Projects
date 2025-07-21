@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manage_tasks/Core/utils/assets.dart';
 import 'package:manage_tasks/Core/utils/cash_helper.dart';
+import 'package:manage_tasks/Features/posts_taps/data/shared_posts.dart';
 import '../../../../Core/utils/shared_tasks.dart';
 
 class ProfileTab extends StatefulWidget {
@@ -204,6 +205,15 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                     ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              'Numb of favorite posts: ${SharedPosts.getFavoritePosts().length}',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
 
