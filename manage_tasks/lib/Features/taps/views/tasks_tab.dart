@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:manage_tasks/Core/widgets/custom_button.dart';
 import 'package:manage_tasks/Core/widgets/custom_text_field.dart';
 
-import '../../Core/utils/cash_helper.dart';
-import '../../Core/utils/shared_tasks.dart';
+import '../../../../Core/utils/cash_helper.dart';
+import '../../../../Core/utils/shared_tasks.dart';
 
 class TasksTab extends StatefulWidget {
   const TasksTab({super.key});
@@ -19,7 +20,7 @@ class _TasksTabState extends State<TasksTab> {
       setState(() {
         SharedTasks.addTask(
           taskController.text,
-          CacheHelper.getDataSync(key: 'firstName')!,
+          CacheHelper.getData(key: 'firstName')!,
         );
         taskController.clear();
       });
@@ -64,24 +65,7 @@ class _TasksTabState extends State<TasksTab> {
             // Add Task Button
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: addTask,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF00FF00),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text(
-                  'Add Task',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+              child: CustomButton(onPressed: addTask, text: 'Add Task'),
             ),
             const SizedBox(height: 32),
             // Tasks Title
@@ -121,7 +105,8 @@ class _TasksTabState extends State<TasksTab> {
                                       : Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
-                                  decoration: SharedTasks.tasks[index]['completed']
+                                  decoration:
+                                      SharedTasks.tasks[index]['completed']
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
                                 ),

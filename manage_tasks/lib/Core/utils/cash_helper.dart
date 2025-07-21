@@ -22,12 +22,7 @@ class CacheHelper {
     }
   }
 
-  static Future<dynamic> getData({required String key}) async {
-    SharedPreferences shared = await SharedPreferences.getInstance();
-    return shared.get(key);
-  }
-
-  static dynamic getDataSync({required String key}) {
+  static dynamic getData({required String key}) {
     return sharedPreferences.get(key);
   }
 

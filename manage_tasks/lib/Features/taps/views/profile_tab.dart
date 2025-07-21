@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manage_tasks/Core/utils/assets.dart';
 import 'package:manage_tasks/Core/utils/cash_helper.dart';
-import '../../Core/utils/shared_tasks.dart';
+import '../../../../Core/utils/shared_tasks.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -18,12 +18,12 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-    String firstName = CacheHelper.getDataSync(key: 'firstName');
-    String lastName = CacheHelper.getDataSync(key: 'lastName');
-    String email = CacheHelper.getDataSync(key: 'email');
-    String job = CacheHelper.getDataSync(key: 'jobTitle');
-    String userAddress = CacheHelper.getDataSync(key: 'address');
-    String userGender = CacheHelper.getDataSync(key: 'gender');
+    String firstName = CacheHelper.getData(key: 'firstName');
+    String lastName = CacheHelper.getData(key: 'lastName');
+    String email = CacheHelper.getData(key: 'email');
+    String job = CacheHelper.getData(key: 'jobTitle');
+    String userAddress = CacheHelper.getData(key: 'address');
+    String userGender = CacheHelper.getData(key: 'gender');
 
     String userName = '$firstName $lastName';
     String userEmail = email;

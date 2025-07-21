@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manage_tasks/Core/utils/cash_helper.dart';
-import '../../Core/widgets/custom_text_field.dart';
+import 'package:manage_tasks/Core/widgets/custom_button.dart';
+import '../widgets/header_section.dart';
+import '../../../Core/widgets/custom_text_field.dart';
 
 class CreateAccountView extends StatefulWidget {
   const CreateAccountView({super.key});
@@ -42,15 +44,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 40),
-                  const Text(
-                    'Join TaskMate Start\norganizing your day!',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      height: 1.2,
-                    ),
-                  ),
+                  HeaderSection(),
                   const SizedBox(height: 50),
 
                   CustomTextField(
@@ -170,15 +164,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                   SizedBox(
                     width: double.infinity,
                     height: 55,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0A8CED),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        elevation: 0,
-                      ),
+                    child: CustomButton(
                       onPressed: () async {
                         if (formKey.currentState!.validate() &&
                             selectedGender != null) {
@@ -226,13 +212,7 @@ class _CreateAccountViewState extends State<CreateAccountView> {
                           );
                         }
                       },
-                      child: const Text(
-                        'Let\'s Start!',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      text: 'Let\'s Start!',
                     ),
                   ),
                   const SizedBox(height: 30),

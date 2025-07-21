@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:manage_tasks/Views/in_app/home_tap.dart';
-import 'package:manage_tasks/Views/in_app/profile_tab.dart';
-import 'package:manage_tasks/Views/in_app/tasks_tab.dart';
-import '../../Core/utils/cash_helper.dart';
+import 'package:manage_tasks/Features/posts_taps/views/favorites_tab.dart';
+import 'package:manage_tasks/Features/taps/views/home_tab.dart';
+import 'package:manage_tasks/Features/posts_taps/views/posts_tab.dart';
+import 'package:manage_tasks/Features/taps/views/profile_tab.dart';
+import 'package:manage_tasks/Features/taps/views/tasks_tab.dart';
+import 'package:manage_tasks/Features/taps/widgets/Custom_listTile.dart';
+import '../../../Core/utils/cash_helper.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -15,7 +18,13 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   int selectedIndex = 0;
 
-  List<Widget> get pages => [HomeTab(), TasksTab(), ProfileTab()];
+  List<Widget> get pages => [
+    HomeTab(),
+    TasksTab(),
+    ProfileTab(),
+    PostsTab(),
+    FavoritesTab(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +52,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    '${CacheHelper.getDataSync(key: 'firstName')} ${CacheHelper.getDataSync(key: 'lastName')}',
+                    '${CacheHelper.getData(key: 'firstName')} ${CacheHelper.getData(key: 'lastName')}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -51,15 +60,15 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ),
                   Text(
-                    CacheHelper.getDataSync(key: 'email'),
+                    CacheHelper.getData(key: 'email'),
                     style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
                 ],
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.home, color: Colors.white),
-              title: const Text('Home', style: TextStyle(color: Colors.white)),
+            CustomListTile(
+              title: 'Home',
+              icon: Icons.home,
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -67,9 +76,9 @@ class _HomeViewState extends State<HomeView> {
                 });
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.task_alt, color: Colors.white),
-              title: const Text('Tasks', style: TextStyle(color: Colors.white)),
+            CustomListTile(
+              title: 'Tasks',
+              icon: Icons.task_alt,
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -77,12 +86,9 @@ class _HomeViewState extends State<HomeView> {
                 });
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.person, color: Colors.white),
-              title: const Text(
-                'Profile',
-                style: TextStyle(color: Colors.white),
-              ),
+            CustomListTile(
+              title: 'Profile',
+              icon: Icons.person,
               onTap: () {
                 Navigator.pop(context);
                 setState(() {
@@ -90,10 +96,31 @@ class _HomeViewState extends State<HomeView> {
                 });
               },
             ),
+            CustomListTile(
+              title: 'Posts',
+              icon: Icons.post_add,
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  selectedIndex = 3;
+                });
+              },
+            ),
+            CustomListTile(
+              title: 'Favorites',
+              icon: Icons.favorite,
+              onTap: () {
+                Navigator.pop(context);
+                setState(() {
+                  selectedIndex = 4;
+                });
+              },
+            ),
             const Divider(color: Colors.white24),
-            ListTile(
-              leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text('Logout', style: TextStyle(color: Colors.red)),
+            CustomListTile(
+              title: 'Logout',
+              icon: Icons.logout,
+              color: Colors.red,
               onTap: () {
                 showLogoutDialog(context);
               },
@@ -108,6 +135,7 @@ class _HomeViewState extends State<HomeView> {
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white.withValues(alpha: 0.5),
         currentIndex: selectedIndex,
+        type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {
             selectedIndex = index;
@@ -117,6 +145,11 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Tasks'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(icon: Icon(Icons.post_add), label: 'Posts'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorites',
+          ),
         ],
       ),
     );
